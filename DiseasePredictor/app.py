@@ -55,7 +55,7 @@ if selected == 'Diabetes Prediction':
     if st.button('Get Diabetes Result'):
         try:
             user_input = [float(x) for x in [Pregnancies, Glucose, BloodPressure, SkinThickness, Insulin, BMI, DiabetesPedigreeFunction, Age]]
-            prediction = diabetes_model.predict([user_input])
+            prediction = diabetes_model.predict([3.3])
 
             if prediction[0] == 1:
                 st.error('⚠️ Diagnosis: The person is likely Diabetic.')
@@ -101,3 +101,4 @@ if selected == 'Heart Disease Prediction':
         except ValueError:
 
             st.warning("Please enter valid numbers only.")
+
