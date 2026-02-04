@@ -2,6 +2,14 @@ import pickle
 import streamlit as st
 from streamlit_option_menu import option_menu
 import os
+import sys
+
+def get_resource_path(relative_path):
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path,relative_path)
 
 # Set up the page
 st.set_page_config(page_title="Health Assistant", layout="wide", page_icon="🧑‍⚕️")
@@ -11,8 +19,8 @@ st.set_page_config(page_title="Health Assistant", layout="wide", page_icon="🧑
 # Load the saved models
 # We use simpler relative paths here
 try:
-    diabetes_model = pickle.load(open('saved_models/diabetes_model.sav', 'rb'))
-    heart_model = pickle.load(open('saved_models/heart_model.sav', 'rb'))
+    diabetes_model = pickle.load(open(get_resource_path('saved_models/diabetes_model.sav'), 'rb'))
+    heart_model = pickle.load(open(get_resource_path('saved_models/heart_model.sav'), 'rb'))
 except FileNotFoundError:
     st.error("Error: Model files not found. Make sure you are running this command from the 'DiseasePredictor' folder.")
 
@@ -91,4 +99,5 @@ if selected == 'Heart Disease Prediction':
             else:
                 st.success('✅ Diagnosis: The person is Healthy.')
         except ValueError:
+
             st.warning("Please enter valid numbers only.")
